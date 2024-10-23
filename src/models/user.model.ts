@@ -1,5 +1,6 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import Club from "./club.model";
+import bcrypt from "bcryptjs";
 
 export default class User extends Model<IUser> {
   static initialize(sequelize: Sequelize) {
@@ -49,6 +50,16 @@ export default class User extends Model<IUser> {
         timestamps: true,
       },
     );
+
+    super.addHook("beforeSave", async (user: Model<IUser>) => {
+      if (user.dataValues.password) {
+        const salt = await bcrypt.genSalt(10);
+        user.setDataValue(
+          "password",
+          await bcrypt.hash(user.dataValues.password, salt),
+        );
+      }
+    });
   }
 
   static associate() {

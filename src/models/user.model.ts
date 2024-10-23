@@ -22,7 +22,8 @@ export default class User extends Model<IUser> {
           allowNull: false,
         },
         role: {
-          type: DataTypes.TINYINT,
+          type: DataTypes.ENUM,
+          values: ["ADMIN", "CLUB"],
           allowNull: false,
         },
         createdAt: {

@@ -1,0 +1,39 @@
+{
+  "name": "dongle-be-v2",
+  "version": "1.0.0",
+  "description": "우리의 동아리, 우리의 동글",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=local nodemon --exec ts-node --files ./src/app.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.8",
+    "@types/sequelize": "^4.28.20",
+    "@types/yup": "^0.32.0",
+    "app-root-path": "^3.1.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "http-status-codes": "^2.3.0",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.11.3",
+    "sequelize": "^6.37.4",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.0",
+    "winston": "^3.15.0",
+    "winston-daily-rotate-file": "^5.0.0",
+    "yup": "^1.4.0"
+  }
+}

@@ -18,4 +18,9 @@ export const env = {
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expires: process.env.JWT_EXPIRES,
+    refresh_expires: process.env.JWT_REFRESH_EXPIRES,
+  },
 };

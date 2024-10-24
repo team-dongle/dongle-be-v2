@@ -6,10 +6,14 @@ import cors from "cors";
 import { connect } from "./utils/db";
 import { StatusCodes } from "http-status-codes";
 import * as v1 from "./routes/v1/v1.route";
+import bodyParser from "body-parser";
+import { errorMiddleware } from "./middlewares/error.middleware";
 
 const app = express();
 
-app.use(morganMiddleware);
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: env.app.cors, credentials: true }));
 
 app.get("/healthCheck", (_req, res) => {
@@ -17,6 +21,9 @@ app.get("/healthCheck", (_req, res) => {
 });
 
 app.use(v1.path, v1.router);
+
+app.use(errorMiddleware);
+app.use(morganMiddleware);
 
 app.listen(env.app.port, () => {
   connect();

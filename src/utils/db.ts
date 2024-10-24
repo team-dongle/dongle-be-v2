@@ -1,6 +1,9 @@
 import { Sequelize } from "sequelize";
 import { env } from "./env";
 import logger from "./logger";
+import User from "../models/user.model";
+import Category from "../models/category.model";
+import Club from "../models/club.model";
 
 const sequelize = new Sequelize(
   env.db.schema,
@@ -20,9 +23,17 @@ const sequelize = new Sequelize(
   },
 );
 
-const initModels = () => {};
+const initModels = () => {
+  User.initialize(sequelize);
+  Category.initialize(sequelize);
+  Club.initialize(sequelize);
+};
 
-const associateModels = () => {};
+const associateModels = () => {
+  User.associate();
+  Category.associate();
+  Club.associate();
+};
 
 export const connect = () => {
   initModels();

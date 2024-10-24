@@ -18,7 +18,7 @@ export default class User extends Model<IUser> {
           allowNull: false,
         },
         password: {
-          type: DataTypes.STRING(20),
+          type: DataTypes.STRING(72),
           allowNull: false,
         },
         role: {
@@ -54,7 +54,7 @@ export default class User extends Model<IUser> {
 
     super.addHook("beforeSave", async (user: Model<IUser>) => {
       if (user.dataValues.password) {
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt.genSalt(2);
         user.setDataValue(
           "password",
           await bcrypt.hash(user.dataValues.password, salt),

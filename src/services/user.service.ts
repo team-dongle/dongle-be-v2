@@ -31,6 +31,13 @@ export default class UserService {
     if (!(await schema.isValid(payload)))
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
+    const isUserExists = await User.findOne({
+      where: { username: payload.username },
+    }).then((user) => user !== null);
+
+    if (isUserExists)
+      throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
+
     const result = await User.create(payload);
 
     if (!result) throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);

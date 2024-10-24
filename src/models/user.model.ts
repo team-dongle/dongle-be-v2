@@ -22,6 +22,10 @@ export default class User extends Model<IUser> {
           type: DataTypes.STRING(72),
           allowNull: false,
         },
+        name: {
+          type: DataTypes.STRING(10),
+          allowNull: false,
+        },
         role: {
           type: DataTypes.ENUM,
           values: ["ADMIN", "CLUB"],

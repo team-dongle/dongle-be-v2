@@ -27,6 +27,6 @@ export default class AuthService {
       role: user.dataValues.role,
     });
 
-    return { token };
+    return { token, role: user.dataValues.role };
   }
 }

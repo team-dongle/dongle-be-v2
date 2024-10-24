@@ -3,7 +3,7 @@ import User from "../models/user.model";
 import { ApiError } from "../utils/error";
 import * as Yup from "yup";
 import JwtService from "./jwt.service";
-import logger from "../utils/logger";
+import bcrypt from "bcryptjs";
 
 export default class AuthService {
   public async login(username: string, password: string) {
@@ -19,7 +19,7 @@ export default class AuthService {
 
     if (!user) throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
-    if (password !== user.dataValues.password)
+    if (!(await bcrypt.compare(password, user.dataValues.password)))
       throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
     const token = JwtService.sign({

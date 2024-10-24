@@ -7,7 +7,10 @@ import logger from "../utils/logger";
 
 export const authMiddleware: RequestHandler = async (req, _res, next) => {
   try {
-    const token = req.headers.authorization.split("Bearer")[1];
+    if (!req.headers.authorization)
+      throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+
+    const token = req.headers.authorization.split("Bearer ")[1] || "";
     const decoded = JwtService.verify(token);
 
     if (!decoded) throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);

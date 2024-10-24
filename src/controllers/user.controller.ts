@@ -22,12 +22,13 @@ export default class UserController {
 
   public createUser: RequestHandler = async (req, res, next) => {
     try {
-      const { username, password, role } = req.body;
+      const { username, password, role, name } = req.body;
 
       await new UserService().createUser({
         username,
         password,
         role,
+        name,
       });
 
       res.status(StatusCodes.CREATED).json({ code: StatusCodes.CREATED });

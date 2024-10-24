@@ -23,11 +23,13 @@ export default class UserService {
     username: string;
     password: string;
     role: "CLUB" | "ADMIN";
+    name: string;
   }) {
     const schema = Yup.object().shape({
       username: Yup.string().required(),
       password: Yup.string().required(),
       role: Yup.string().oneOf(["CLUB", "ADMIN"]).required(),
+      name: Yup.string().required(),
     });
 
     if (!(await schema.isValid(payload)))

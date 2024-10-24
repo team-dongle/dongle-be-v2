@@ -3,7 +3,7 @@ import Category from "../models/category.model";
 import Club from "../models/club.model";
 
 export default class ClubService {
-  public async allClubs(page?: number, size?: number) {
+  public async allClubs() {
     const result = await Club.findAndCountAll({
       where: { deletedAt: null },
       include: [
@@ -15,7 +15,7 @@ export default class ClubService {
         {
           model: User,
           attributes: ["name"],
-          as: "club",
+          as: "owner",
         },
       ],
       attributes: { exclude: ["detail", "ownerId", "categoryId"] },

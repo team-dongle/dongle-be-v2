@@ -67,10 +67,7 @@ export default class Club extends Model<IClub> {
         validate: {
           isRecruitingWithNoPeriod() {
             if (this.isRecruiting && this.recruitPeriod === null) {
-              throw new ApiError(
-                "'recruitPeriod' is require when 'isRecruiting' is 'true'.",
-                StatusCodes.BAD_REQUEST,
-              );
+              throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
             }
           },
         },

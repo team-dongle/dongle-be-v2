@@ -2,6 +2,7 @@ import { ApiError } from "../utils/error";
 import User from "../models/user.model";
 import * as Yup from "yup";
 import { StatusCodes } from "http-status-codes";
+import Club from "../models/club.model";
 
 export default class UserService {
   public async allUsers(page: number, size: number) {
@@ -9,6 +10,7 @@ export default class UserService {
       limit: size,
       offset: size * (page - 1),
       where: { deletedAt: null },
+      include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
         exclude: ["password", "role", "createdAt", "updatedAt", "deletedAt"],
       },

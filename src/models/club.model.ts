@@ -20,7 +20,7 @@ export default class Club extends Model<IClub> {
           allowNull: false,
         },
         contact: {
-          type: DataTypes.STRING(10),
+          type: DataTypes.STRING(20),
           allowNull: false,
         },
         location: {
@@ -55,6 +55,20 @@ export default class Club extends Model<IClub> {
           type: DataTypes.BOOLEAN,
           allowNull: false,
         },
+        createdAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: sequelize.fn("NOW"),
+        },
+        updatedAt: {
+          type: DataTypes.DATE,
+          allowNull: false,
+          defaultValue: sequelize.fn("NOW"),
+        },
+        deletedAt: {
+          type: DataTypes.DATE,
+          allowNull: true,
+        },
       },
       {
         sequelize,
@@ -76,10 +90,10 @@ export default class Club extends Model<IClub> {
   }
 
   static associate() {
-    super.hasOne(User, {
-      as: "club",
-      foreignKey: { name: "clubId", allowNull: true },
-      sourceKey: "_id",
+    super.belongsTo(User, {
+      as: "owner",
+      foreignKey: { name: "ownerId", allowNull: true },
+      targetKey: "_id",
     });
 
     super.belongsTo(Category, {

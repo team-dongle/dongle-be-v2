@@ -69,10 +69,10 @@ export default class User extends Model<IUser> {
   }
 
   static associate() {
-    super.belongsTo(Club, {
+    super.hasOne(Club, {
       as: "club",
-      foreignKey: { name: "clubId", allowNull: true },
-      targetKey: "_id",
+      foreignKey: { name: "ownerId", allowNull: true },
+      sourceKey: "_id",
     });
   }
 }

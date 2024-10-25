@@ -15,12 +15,24 @@ export default class UserController {
 
       const result = await new UserService().allUsers(page, size);
 
-      res
-        .status(StatusCodes.OK)
-        .json({
-          code: StatusCodes.OK,
-          result: { totalPages: Math.ceil(result.count / size), ...result },
-        });
+      res.status(StatusCodes.OK).json({
+        code: StatusCodes.OK,
+        result: { totalPages: Math.ceil(result.count / size), ...result },
+      });
+    } catch (e: any) {
+      logger.error(`${e}`);
+      next(e);
+    }
+  };
+
+  public userDetail: RequestHandler = async (req, res, next) => {
+    try {
+      if (!req.username)
+        throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+
+      const result = await new UserService().userDetail(req.username);
+
+      res.status(StatusCodes.OK).json({ code: StatusCodes.OK, result: result });
     } catch (e: any) {
       logger.error(`${e}`);
       next(e);

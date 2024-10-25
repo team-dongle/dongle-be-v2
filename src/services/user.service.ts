@@ -19,6 +19,18 @@ export default class UserService {
     return result;
   }
 
+  public async userDetail(username: string) {
+    const result = await User.findOne({
+      where: { username: username },
+      include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
+      attributes: {
+        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
+      },
+    });
+
+    return result;
+  }
+
   public async createUser(payload: {
     username: string;
     password: string;

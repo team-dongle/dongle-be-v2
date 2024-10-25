@@ -55,6 +55,9 @@ export default class ClubController {
       const clubId = parseInt(req.params.clubId, 10);
       const payload = req.body;
 
+      if (req.role === "CLUB" && req.club !== clubId)
+        throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+
       if (!clubId) throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
       await new ClubService().updateClub(clubId, payload);

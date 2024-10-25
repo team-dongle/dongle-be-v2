@@ -12,7 +12,7 @@ export default class UserService {
       where: { deletedAt: null },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
-        exclude: ["password", "role", "createdAt", "updatedAt", "deletedAt"],
+        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
       },
     });
 

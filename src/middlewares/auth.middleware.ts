@@ -21,6 +21,7 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
 
     req.username = user.dataValues.username;
     req.role = user.dataValues.role;
+    req.club = user.dataValues.club;
     next();
   } catch (e: any) {
     logger.error(`${e}`);

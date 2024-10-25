@@ -4,6 +4,8 @@ import { ApiError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/user.model";
 import logger from "../utils/logger";
+import Club from "../models/club.model";
+import { ForeignKey, Model } from "sequelize";
 
 export const authMiddleware: RequestHandler = async (req, _res, next) => {
   try {
@@ -15,13 +17,16 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
 
     if (!decoded) throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
-    const user = await User.findOne({ where: { username: decoded.username } });
+    const user = await User.findOne({
+      where: { username: decoded.username },
+      include: [{ model: Club, attributes: ["_id"], as: "club" }],
+    });
 
     if (!user) throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
     req.username = user.dataValues.username;
     req.role = user.dataValues.role;
-    req.club = user.dataValues.club;
+    req.club = user.dataValues.club._id;
     next();
   } catch (e: any) {
     logger.error(`${e}`);

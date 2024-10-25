@@ -17,7 +17,10 @@ export default class UserController {
 
       res
         .status(StatusCodes.OK)
-        .json({ code: StatusCodes.OK, result: { ...result } });
+        .json({
+          code: StatusCodes.OK,
+          result: { totalPages: Math.ceil(result.count / size), ...result },
+        });
     } catch (e: any) {
       logger.error(`${e}`);
       next(e);

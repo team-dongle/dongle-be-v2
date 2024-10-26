@@ -5,7 +5,6 @@ import { StatusCodes } from "http-status-codes";
 import User from "../models/user.model";
 import logger from "../utils/logger";
 import Club from "../models/club.model";
-import { ForeignKey, Model } from "sequelize";
 
 export const authMiddleware: RequestHandler = async (req, _res, next) => {
   try {

@@ -3,4 +3,5 @@ interface IUser extends IModel {
   password: string;
   role: "CLUB" | "ADMIN";
   club: any;
+  refreshToken: string;
 }

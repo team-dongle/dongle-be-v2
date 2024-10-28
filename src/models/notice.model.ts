@@ -13,7 +13,7 @@ export default class Notice extends Model<INotice> {
                 primaryKey: true,
               },
             title: {
-                type: DataTypes.STRING(20),
+                type: DataTypes.STRING(50),
                 allowNull: false,
               },
             content: {

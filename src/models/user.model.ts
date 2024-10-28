@@ -31,6 +31,10 @@ export default class User extends Model<IUser> {
           values: ["ADMIN", "CLUB"],
           allowNull: false,
         },
+        refreshToken: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+        },
         createdAt: {
           type: DataTypes.DATE,
           allowNull: false,

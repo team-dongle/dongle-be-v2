@@ -5,3 +5,4 @@ export const router = Router();
 export const path = "/auth";
 
 router.post("/login", new AuthController().login);
+router.post("/refresh", new AuthController().refresh);

@@ -12,7 +12,19 @@ export default class UserService {
       where: { deletedAt: null },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
-        exclude: ["password", "role", "createdAt", "updatedAt", "deletedAt"],
+        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
+      },
+    });
+
+    return result;
+  }
+
+  public async userDetail(username: string) {
+    const result = await User.findOne({
+      where: { username: username },
+      include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
+      attributes: {
+        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
       },
     });
 

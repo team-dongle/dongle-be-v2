@@ -9,4 +9,6 @@ interface IClub extends IModel {
   detail: string;
   recruitPeriod?: Date;
   isRecruiting: Date;
+  categoryId?: number;
+  ownerId?: string | number;
 }

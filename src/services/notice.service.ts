@@ -21,8 +21,14 @@ export default class NoticeService {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
       content: Yup.string().required(),
-      authorId: Yup.number().required(),
+      authorId: Yup.number().required(), 
     });
+
+    const isUserExists = await User.findOne({
+      where: {_id: payload.authorId}
+    }).then((user) => user !== null);
+
+    if (!isUserExists) throw new ApiError("Bad Reqeust", StatusCodes.BAD_REQUEST);
 
     if (!(await schema.isValid(payload))) {
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);

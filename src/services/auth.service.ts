@@ -57,8 +57,6 @@ export default class AuthService {
       decodedAccessToken.username,
     );
 
-    console.log(verifyAccessToken, await verifyRefreshToken);
-
     if (
       verifyAccessToken.ok === false &&
       verifyAccessToken.message === "Token Expired"

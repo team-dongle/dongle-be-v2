@@ -14,10 +14,11 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
     const token = req.headers.authorization.split("Bearer ")[1] || "";
     const decoded = JwtService.verify(token);
 
-    if (!decoded) throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+    if (!decoded.ok)
+      throw new ApiError(decoded.message, StatusCodes.UNAUTHORIZED);
 
     const user = await User.findOne({
-      where: { username: decoded.username },
+      where: { username: decoded.result.username },
       include: [{ model: Club, attributes: ["_id"], as: "club" }],
     });
 

@@ -51,13 +51,10 @@ export default class AuthService {
       role: string;
     };
 
-    console.log(decodedAccessToken);
     const verifyRefreshToken = JwtService.refreshVerify(
       refreshToken,
       decodedAccessToken.username,
     );
-
-    console.log(verifyAccessToken, await verifyRefreshToken);
 
     if (
       verifyAccessToken.ok === false &&

@@ -1,6 +1,7 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
 import Club from "./club.model";
 import bcrypt from "bcryptjs";
+import Notice from "./notice.model";
 
 export default class User extends Model<IUser> {
   static initialize(sequelize: Sequelize) {
@@ -78,5 +79,11 @@ export default class User extends Model<IUser> {
       foreignKey: { name: "ownerId", allowNull: true },
       sourceKey: "_id",
     });
+
+    super.hasMany(Notice, {
+      as: "notice",
+      foreignKey: { name: "authorId", allowNull: false },
+      sourceKey: "_id"
+    })
   }
 }

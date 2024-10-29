@@ -17,6 +17,9 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
     if (!decoded.ok)
       throw new ApiError(decoded.message, StatusCodes.UNAUTHORIZED);
 
+    if (!decoded.result.username)
+      throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+
     const user = await User.findOne({
       where: { username: decoded.result.username },
       include: [{ model: Club, attributes: ["_id"], as: "club" }],

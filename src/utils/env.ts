@@ -23,4 +23,13 @@ export const env = {
     expires: process.env.JWT_EXPIRES,
     refresh_expires: process.env.JWT_REFRESH_EXPIRES,
   },
+  bucket: {
+    name: process.env.BUCKET_NAME,
+    endpoint: process.env.BUCKET_API_ENDPOINT,
+    secret: process.env.BUCKET_SECRET_KEY,
+    accessKey: process.env.BUCKET_ACCESS_KEY,
+    userid: process.env.BUCKET_USERID,
+    allow_exts_img: process.env.BUCKET_ALLOW_EXTS_IMAGE.split(",") || [],
+    allow_exts_file: process.env.BUCKET_ALLOW_EXTS_FILE.split(",") || [],
+  },
 };

@@ -21,7 +21,16 @@ export default class ClubService {
           as: "owner",
         },
       ],
-      attributes: { exclude: ["detail", "ownerId", "categoryId"] },
+      attributes: {
+        exclude: [
+          "detail",
+          "ownerId",
+          "categoryId",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+        ],
+      },
     });
 
     return result;
@@ -42,7 +51,15 @@ export default class ClubService {
           as: "owner",
         },
       ],
-      attributes: { exclude: ["ownerId", "categoryId"] },
+      attributes: {
+        exclude: [
+          "ownerId",
+          "categoryId",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+        ],
+      },
     });
 
     return result;

@@ -12,7 +12,13 @@ export default class UserService {
       where: { deletedAt: null },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
-        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
+        exclude: [
+          "password",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+          "refreshToken",
+        ],
       },
     });
 
@@ -24,7 +30,13 @@ export default class UserService {
       where: { username: username },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
-        exclude: ["password", "createdAt", "updatedAt", "deletedAt"],
+        exclude: [
+          "password",
+          "createdAt",
+          "updatedAt",
+          "deletedAt",
+          "refreshToken",
+        ],
       },
     });
 

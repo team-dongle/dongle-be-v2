@@ -5,10 +5,8 @@ import { StatusCodes } from "http-status-codes";
 import Club from "../models/club.model";
 
 export default class UserService {
-  public async allUsers(page: number, size: number) {
+  public async allUsers() {
     const result = await User.findAndCountAll({
-      limit: size,
-      offset: size * (page - 1),
       where: { deletedAt: null },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {

@@ -101,6 +101,13 @@ export default class ClubService {
     if (isClubExists)
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
+    const isOwnerHasClub = await Club.findOne({
+      where: { ownerId: owner.dataValues._id },
+    }).then((club) => club !== null);
+
+    if (isOwnerHasClub)
+      throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
+
     const result = await Club.create({
       ...payload,
       ownerId: owner.dataValues._id,

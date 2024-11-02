@@ -120,21 +120,28 @@ export default class ClubService {
 
   public async updateClub(clubId: number, payload: Partial<IClub>) {
     const schema = Yup.object().shape({
+      name: Yup.string().optional(),
       contact: Yup.string().optional(),
       location: Yup.string().optional(),
       applyUrl: Yup.string().optional(),
       thumbnail: Yup.lazy((value: string) =>
-        value === "" ? Yup.string() : Yup.string().optional(),
+        value === ""
+          ? Yup.string().nullable()
+          : Yup.string().optional().nullable(),
       ),
       sns: Yup.lazy((value: string) =>
-        value === "" ? Yup.string() : Yup.string().optional(),
+        value === ""
+          ? Yup.string().nullable()
+          : Yup.string().optional().nullable(),
       ),
       logo: Yup.lazy((value: string) =>
-        value === "" ? Yup.string() : Yup.string().optional(),
+        value === ""
+          ? Yup.string().nullable()
+          : Yup.string().optional().nullable(),
       ),
       detail: Yup.string().optional(),
       recruitPeriod: Yup.string().optional(),
-      isRecruiting: Yup.boolean().required(),
+      isRecruiting: Yup.boolean().optional(),
     });
 
     if (!(await schema.isValid(payload)))

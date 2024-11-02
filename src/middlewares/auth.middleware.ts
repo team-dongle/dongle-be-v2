@@ -33,8 +33,6 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
       return club.dataValues._id;
     });
 
-    console.log(clubId);
-
     req.username = user.dataValues.username;
     req.role = user.dataValues.role;
     req.club = clubId;

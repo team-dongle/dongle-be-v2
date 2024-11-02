@@ -8,8 +8,4 @@ export const path = "/users";
 router.get("/", authMiddleware, new UserController().allUserList);
 router.get("/profile", authMiddleware, new UserController().userDetail);
 router.post("/create", authMiddleware, new UserController().createUser);
-router.delete(
-  "/delete/:userId",
-  authMiddleware,
-  new UserController().deleteUser,
-);
+router.delete("/:userId", authMiddleware, new UserController().deleteUser);

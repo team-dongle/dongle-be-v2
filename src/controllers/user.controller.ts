@@ -10,14 +10,11 @@ export default class UserController {
       if (req.role !== "ADMIN")
         throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
-      const page = parseInt(req.query.page as string, 10) || 1;
-      const size = parseInt(req.query.size as string, 10) || 5;
-
-      const result = await new UserService().allUsers(page, size);
+      const result = await new UserService().allUsers();
 
       res.status(StatusCodes.OK).json({
         code: StatusCodes.OK,
-        result: { totalPages: Math.ceil(result.count / size), ...result },
+        result: { ...result },
       });
     } catch (e: any) {
       logger.error(`${e}`);

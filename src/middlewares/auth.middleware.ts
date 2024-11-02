@@ -22,14 +22,22 @@ export const authMiddleware: RequestHandler = async (req, _res, next) => {
 
     const user = await User.findOne({
       where: { username: decoded.result.username },
-      include: [{ model: Club, attributes: ["_id"], as: "club" }],
     });
 
     if (!user) throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
+    const clubId = await Club.findOne({
+      where: { ownerId: user.dataValues._id },
+    }).then((club) => {
+      if (!club) return null;
+      return club.dataValues._id;
+    });
+
+    console.log(clubId);
+
     req.username = user.dataValues.username;
     req.role = user.dataValues.role;
-    req.club = user.dataValues.club._id;
+    req.club = clubId;
     next();
   } catch (e: any) {
     logger.error(`${e}`);

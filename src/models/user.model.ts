@@ -78,12 +78,13 @@ export default class User extends Model<IUser> {
       as: "club",
       foreignKey: { name: "ownerId", allowNull: true },
       sourceKey: "_id",
+      onDelete: "CASCADE",
     });
 
     super.hasMany(Notice, {
       as: "notice",
       foreignKey: { name: "authorId", allowNull: false },
-      sourceKey: "_id"
-    })
+      sourceKey: "_id",
+    });
   }
 }

@@ -94,6 +94,7 @@ export default class Club extends Model<IClub> {
       as: "owner",
       foreignKey: { name: "ownerId", allowNull: true },
       targetKey: "_id",
+      onDelete: "CASCADE",
     });
 
     super.belongsTo(Category, {

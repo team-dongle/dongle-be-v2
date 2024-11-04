@@ -48,7 +48,10 @@ export const connect = () => {
       logger.info("Successfully connected to mysql server.");
 
       sequelize
-        .sync({ alter: process.env.NODE_ENV === "prod" ? false : true })
+        .sync({
+          alter: process.env.NODE_ENV === "prod" ? false : true,
+          force: false,
+        })
         .then(() => {
           logger.info("Successfully synchronized models to mysql server.");
         })

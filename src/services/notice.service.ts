@@ -11,24 +11,29 @@ export default class NoticeService {
       offset: size * (page - 1),
       where: { deletedAt: null },
       include: [{ model: User, attributes: ["name"], as: "author" }],
-      attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+      attributes: { exclude: ["authorId", "updatedAt", "deletedAt"] },
     });
 
     return result;
   }
 
-  public async createNotice(payload: { title: string; content: string; authorId: number }) {
+  public async createNotice(payload: {
+    title: string;
+    content: string;
+    authorId: number;
+  }) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
       content: Yup.string().required(),
-      authorId: Yup.number().required(), 
+      authorId: Yup.number().required(),
     });
 
     const isUserExists = await User.findOne({
-      where: {_id: payload.authorId}
+      where: { _id: payload.authorId },
     }).then((user) => user !== null);
 
-    if (!isUserExists) throw new ApiError("Bad Reqeust", StatusCodes.BAD_REQUEST);
+    if (!isUserExists)
+      throw new ApiError("Bad Reqeust", StatusCodes.BAD_REQUEST);
 
     if (!(await schema.isValid(payload))) {
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
@@ -67,7 +72,10 @@ export default class NoticeService {
     return true;
   }
 
-  public async updateNotice(noticeId: number, payload: { title?: string; content?: string }) {
+  public async updateNotice(
+    noticeId: number,
+    payload: { title?: string; content?: string },
+  ) {
     const schema = Yup.object().shape({
       title: Yup.string().notRequired(),
       content: Yup.string().notRequired(),

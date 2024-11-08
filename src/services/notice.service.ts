@@ -10,6 +10,7 @@ export default class NoticeService {
       limit: size,
       offset: size * (page - 1),
       where: { deletedAt: null },
+      order: [["createdAt", "DESC"]],
       include: [{ model: User, attributes: ["name"], as: "author" }],
       attributes: { exclude: ["authorId", "updatedAt", "deletedAt"] },
     });
@@ -20,26 +21,33 @@ export default class NoticeService {
   public async createNotice(payload: {
     title: string;
     content: string;
-    authorId: number;
+    username: string;
   }) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
       content: Yup.string().required(),
-      authorId: Yup.number().required(),
+      username: Yup.string().required(),
     });
 
     const isUserExists = await User.findOne({
-      where: { _id: payload.authorId },
+      where: { username: payload.username },
     }).then((user) => user !== null);
 
     if (!isUserExists)
-      throw new ApiError("Bad Reqeust", StatusCodes.BAD_REQUEST);
+      throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
     if (!(await schema.isValid(payload))) {
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
     }
 
-    const result = await Notice.create(payload);
+    const user = await User.findOne({ where: { username: payload.username } });
+
+    if (!user) throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
+
+    const result = await Notice.create({
+      ...payload,
+      authorId: user.dataValues._id,
+    });
 
     if (!result) throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
@@ -50,7 +58,7 @@ export default class NoticeService {
     const notice = await Notice.findOne({
       where: { _id: noticeId, deletedAt: null },
       include: [{ model: User, attributes: ["name"], as: "author" }],
-      attributes: { exclude: ["createdAt", "updatedAt", "deletedAt"] },
+      attributes: { exclude: ["updatedAt", "deletedAt"] },
     });
 
     if (!notice) throw new ApiError("Not Found", StatusCodes.NOT_FOUND);

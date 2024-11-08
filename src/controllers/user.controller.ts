@@ -59,6 +59,9 @@ export default class UserController {
 
   public deleteUser: RequestHandler = async (req, res, next) => {
     try {
+      if (req.role !== "ADMIN")
+        throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
+
       const userId = parseInt(req.params.userId, 10);
 
       await new UserService().deleteUser(userId);

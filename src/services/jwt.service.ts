@@ -19,7 +19,7 @@ export default class JwtService {
     } catch (e: any) {
       return {
         ok: false,
-        message: e.name === "TokenExpiredError" && "Token Expired",
+        message: e.name === "TokenExpiredError" ? "Token Expired" : e.message,
       };
     }
   }

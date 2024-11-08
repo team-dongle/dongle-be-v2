@@ -62,7 +62,7 @@ export default class ClubController {
 
       await new ClubService().updateClub(clubId, payload);
 
-      res.status(StatusCodes.NO_CONTENT).json({ code: StatusCodes.NO_CONTENT });
+      res.status(StatusCodes.OK).json({ code: StatusCodes.OK });
     } catch (e: any) {
       logger.error(`${e}`);
       next(e);
@@ -80,7 +80,7 @@ export default class ClubController {
 
       await new ClubService().deleteClub(clubId);
 
-      res.status(StatusCodes.NO_CONTENT).json({ code: StatusCodes.NO_CONTENT });
+      res.status(StatusCodes.OK).json({ code: StatusCodes.OK });
     } catch (e: any) {
       logger.error(`${e}`);
       next(e);

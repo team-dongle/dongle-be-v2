@@ -3,11 +3,12 @@ import User from "../models/user.model";
 import * as Yup from "yup";
 import { StatusCodes } from "http-status-codes";
 import Club from "../models/club.model";
+import { Op } from "sequelize";
 
 export default class UserService {
   public async allUsers() {
     const result = await User.findAndCountAll({
-      where: { deletedAt: null },
+      where: { deletedAt: null, [Op.not]: { role: "ADMIN" } },
       include: [{ model: Club, attributes: ["_id", "name"], as: "club" }],
       attributes: {
         exclude: [

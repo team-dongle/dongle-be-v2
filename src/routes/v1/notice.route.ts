@@ -6,7 +6,7 @@ export const router = Router();
 export const path = "/notices";
 
 router.get("/", new NoticeController().getAllNotices);
-router.get("/:noticeId", authMiddleware, new NoticeController().getNoticeById);
+router.get("/:noticeId", new NoticeController().getNoticeById);
 router.post("/create", authMiddleware, new NoticeController().createNotice);
 router.delete(
   "/:noticeId",

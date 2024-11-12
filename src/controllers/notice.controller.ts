@@ -24,11 +24,12 @@ export default class NoticeController {
       if (req.role !== "ADMIN")
         throw new ApiError("Unauthorized", StatusCodes.UNAUTHORIZED);
 
-      const { title, content } = req.body;
+      const { title, content, attachments } = req.body;
       await new NoticeService().createNotice({
         title,
         content,
         username: req.username,
+        attachments,
       });
 
       res.status(StatusCodes.CREATED).json({ code: StatusCodes.CREATED });

@@ -22,6 +22,7 @@ export default class NoticeService {
     title: string;
     content: string;
     username: string;
+    attachments: { id: string; fileName: string; url: string }[];
   }) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),

@@ -13,3 +13,9 @@ router.post(
   upload("logos", env.bucket.allow_exts_img, 2).single("image"),
   new UploadController().uploadClubLogo,
 );
+router.post(
+  "/attachment",
+  authMiddleware,
+  upload("files", env.bucket.allow_exts_file, 5).single("file"),
+  new UploadController().uploadAttachment,
+);

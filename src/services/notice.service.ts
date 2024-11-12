@@ -12,7 +12,9 @@ export default class NoticeService {
       where: { deletedAt: null },
       order: [["createdAt", "DESC"]],
       include: [{ model: User, attributes: ["name"], as: "author" }],
-      attributes: { exclude: ["authorId", "updatedAt", "deletedAt"] },
+      attributes: {
+        exclude: ["attachments", "authorId", "updatedAt", "deletedAt"],
+      },
     });
 
     return result;

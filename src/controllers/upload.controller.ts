@@ -3,6 +3,7 @@ import path from "path";
 import { env } from "../utils/env";
 import { ApiError } from "../utils/error";
 import { StatusCodes } from "http-status-codes";
+import utf8 from "utf8";
 
 export default class UploadController {
   public uploadClubLogo: RequestHandler = (req, res, next) => {
@@ -28,11 +29,12 @@ export default class UploadController {
     )
       throw new ApiError("Bad Request", StatusCodes.BAD_REQUEST);
 
-    res
-      .status(StatusCodes.CREATED)
-      .json({
-        code: StatusCodes.CREATED,
-        result: { filename: file.originalname, url: file.location },
-      });
+    res.status(StatusCodes.CREATED).json({
+      code: StatusCodes.CREATED,
+      result: {
+        fileName: Buffer.from(file.originalname, "latin1").toString("utf8"),
+        url: file.location,
+      },
+    });
   };
 }

@@ -8,3 +8,5 @@ logs
 .vscode
 
 /src/sql
+
+/dist

@@ -1,6 +1,10 @@
 import { Sequelize } from "sequelize";
 import { env } from "./env";
 import logger from "./logger";
+import User from "../models/user.model";
+import Category from "../models/category.model";
+import Club from "../models/club.model";
+import Notice from "../models/notice.model";
 
 const sequelize = new Sequelize(
   env.db.schema,
@@ -20,9 +24,19 @@ const sequelize = new Sequelize(
   },
 );
 
-const initModels = () => {};
+const initModels = () => {
+  User.initialize(sequelize);
+  Category.initialize(sequelize);
+  Club.initialize(sequelize);
+  Notice.initialize(sequelize);
+};
 
-const associateModels = () => {};
+const associateModels = () => {
+  User.associate();
+  Category.associate();
+  Club.associate();
+  Notice.associate();
+};
 
 export const connect = () => {
   initModels();
@@ -34,7 +48,10 @@ export const connect = () => {
       logger.info("Successfully connected to mysql server.");
 
       sequelize
-        .sync({ alter: process.env.NODE_ENV === "prod" ? false : true })
+        .sync({
+          alter: process.env.NODE_ENV === "prod" ? false : true,
+          force: false,
+        })
         .then(() => {
           logger.info("Successfully synchronized models to mysql server.");
         })

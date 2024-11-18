@@ -34,6 +34,7 @@ export default class UploadController {
       result: {
         fileName: Buffer.from(file.originalname, "latin1").toString("utf8"),
         url: file.location,
+        key: file.key.split("/")[1]
       },
     });
   };

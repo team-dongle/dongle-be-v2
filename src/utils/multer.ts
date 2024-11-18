@@ -13,8 +13,10 @@ const upload = (filePath: string, exts: string[], maxFileSize: number) =>
       s3: s3,
       bucket: env.bucket.name,
       key: (req, file, cb) => {
-        const fileExt = path.extname(file.originalname);
-        cb(null, `${filePath}/${Date.now()}_${v4()}${fileExt}`);
+        const fileExt = path.extname(file.originalname)
+        const baseName = path.basename(file.originalname, path.extname(file.originalname))
+        const encoded = Buffer.from(baseName, "latin1").toString("utf8")
+        cb(null, `${filePath}/${encoded}__${v4()}${fileExt}`);
       },
       acl: "public-read",
     }),

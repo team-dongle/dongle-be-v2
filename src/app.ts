@@ -12,6 +12,8 @@ import expressWinston from "express-winston";
 
 const app = express();
 
+app.set("trust proxy", true);
+
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));

@@ -63,13 +63,7 @@ const expressWinstonMiddleware = expressWinston.logger({
   level: function (req, res) {
     return res.statusCode < 400 ? "info" : "error";
   },
-  transports: [
-    process.env.NODE_ENV !== "prod" &&
-      new winston.transports.Console({
-        format: combine(colorize(), simple()),
-      }),
-    mysqlTransports,
-  ],
+  transports: [mysqlTransports],
   meta: true,
   msg: function (req, res) {
     return `${req.ip} - HTTP ${res.statusCode} ${req.method} ${req.url}`;

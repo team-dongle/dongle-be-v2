@@ -20,7 +20,9 @@ const sequelize = new Sequelize(
       idle: 10000,
     },
     timezone: "+09:00",
-    logging: (message: string) => logger.info(message),
+    logging: (message: string) => {
+      if (process.env.NODE_ENV !== "production") logger.info(message);
+    },
   },
 );
 

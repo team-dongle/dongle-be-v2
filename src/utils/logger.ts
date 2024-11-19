@@ -1,5 +1,8 @@
 import winston from "winston";
 import winstonDaily from "winston-daily-rotate-file";
+import MySQLTransport from "winston-mysql";
+import expressWinston from "express-winston";
+import { env } from "./env";
 
 const { combine, timestamp, label, printf, colorize, simple } = winston.format;
 
@@ -9,6 +12,16 @@ const logFormat = printf(
   ({ level, message, label, timestamp }) =>
     `${timestamp} [${label}] ${level}: ${message}`,
 );
+
+const loggerDBConfig = {
+  host: env.db.host,
+  user: env.db.username,
+  password: env.db.password,
+  database: env.db.schema,
+  table: env.db.loggingTable,
+};
+
+const mysqlTransports = new MySQLTransport(loggerDBConfig);
 
 const logger = winston.createLogger({
   format: combine(
@@ -46,10 +59,29 @@ const logger = winston.createLogger({
   ],
 });
 
+const expressWinstonMiddleware = expressWinston.logger({
+  level: function (req, res) {
+    return res.statusCode < 400 ? "info" : "error";
+  },
+  transports: [
+    process.env.NODE_ENV !== "prod" &&
+      new winston.transports.Console({
+        format: combine(colorize(), simple()),
+      }),
+    mysqlTransports,
+  ],
+  meta: true,
+  msg: function (req, res) {
+    return `${req.ip} - HTTP ${res.statusCode} ${req.method} ${req.url}`;
+  },
+  colorize: false,
+});
+
 if (process.env.NODE_ENV !== "prod") {
   logger.add(
     new winston.transports.Console({ format: combine(colorize(), simple()) }),
   );
 }
 
+export { expressWinstonMiddleware };
 export default logger;

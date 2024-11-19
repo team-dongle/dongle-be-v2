@@ -17,6 +17,7 @@ export const env = {
     schema: process.env.MYSQL_SCHEMA,
     username: process.env.MYSQL_USERNAME,
     password: process.env.MYSQL_PASSWORD,
+    loggingTable: process.env.MYSQL_LOGGING_TABLE
   },
   jwt: {
     secret: process.env.JWT_SECRET,
